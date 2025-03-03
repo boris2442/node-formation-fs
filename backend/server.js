@@ -1,5 +1,9 @@
 const express=require('express');
 const port=5000;
+const dotenv=require("dotenv").config();
+//connexion a la database
+const connectDB=require("./config/db.js");
+connectDB();
 const app=express();
 
 // app.get("/post", (req,res)=>{
