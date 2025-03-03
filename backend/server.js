@@ -9,8 +9,15 @@ const app=express();
 //     })
 // });
 
+//Middleware permet de traiter les donnee de la request
 
 
+
+
+// const postRoute=require("./routes/post.routes")
+app.use(express.json());
+app.use(express.urlencoded({ extended:false}))
+app.use("/post", require("./routes/post.routes.js"))
 
 
 
