@@ -23,11 +23,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended:false}))
 app.use("/post", require("./routes/post.routes.js"))
 
-
-
-
-
-
 //lancer le serveur
 app.listen(port, ()=>{
     console.log(`Le serveur à demarée au port ${port}`)
