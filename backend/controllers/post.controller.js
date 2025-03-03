@@ -35,48 +35,43 @@ module.exports.editPost = async (req, res) => {
 };
 
 module.exports.deletePost = async (req, res) => {
-    const post = await PostModel.findById(req.params.id);
-    if(!post){
-        res.status(400).json({
-            message: "ce post n'existe pas!",
-        });
-    }   
-    await post.remove();
-    req.status(200).json({
-        message: "post supprimé avec succès!",
-    })
-}
+  const post = await PostModel.findById(req.params.id);
+  if (!post) {
+    res.status(400).json({
+      message: "ce post n'existe pas!",
+    });
+  }
+  await post.remove();
+  req.status(200).json({
+    message: "post supprimé avec succès!",
+  });
+};
 
+module.exports.likePost = async (req, res) => {
+  try {
+    await PostModel.findByIdAndUpdate(
+      req.params.id,
+      { $addToSet: { likers: req.body.userId } },
 
-module.exports.likePost=async(req, res)=>{
-    try{
-   await PostModel.findByIdAndUpdate(
-    req.params.id,
-    {$addToSet:{likers:req.body.userId}},
-    
-    {new:true}
+      { new: true }
+    ).then((data) => {
+      res.status(200).send(data);
+    });
+  } catch (error) {
+    res.results(400).json(error);
+  }
+};
+module.exports.disLikePost = async (req, res) => {
+  try {
+    await PostModel.findByIdAndUpdate(
+      req.params.id,
+      { $pull: { likers: req.body.userId } },
 
-   ).then((data)=>{
-
-       res.status(200).send(data)
-   })
-    }catch(error){
-        res.results(400).json(error)
-    }
-}
-module.exports.disLikePost=async(req, res)=>{
-    try{
-   await PostModel.findByIdAndUpdate(
-    req.params.id,
-    {$pull:{likers:req.body.userId}},
-    
-    {new:true}
-
-   ).then((data)=>{
-
-       res.status(200).send(data)
-   })
-    }catch(error){
-        res.results(400).json(error)
-    }
-}
+      { new: true }
+    ).then((data) => {
+      res.status(200).send(data);
+    });
+  } catch (error) {
+    res.results(400).json(error);
+  }
+};
