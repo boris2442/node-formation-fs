@@ -26,7 +26,7 @@ router.put("/:id", editPost);
 // router.delete('/:id', (req, res)=>{
 //     res.json({mesageId:"post supprime sur id numero"+req.params.id});
 // })
-router.delete("/:id", deletePost);
+
 
 //les likes
 // router.patch("/like-post/:id", (req, res) => {
